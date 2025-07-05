@@ -42,7 +42,6 @@ def generate_centered_colorscale(zmin, zmax, base_colorscale='RdBu_r'):
 
 # ========= App Setup ===========
 app = dash.Dash(__name__)
-app.title = "Heatmap Viewer"
 
 # ========= Layout ===========
 app.layout = html.Div([
@@ -320,4 +319,4 @@ def update_distribution(file, mutation_str):
 # This is the important line for Gunicorn
 
 if __name__ == "__main__":
-    app.run(debug=True, port=int(os.getenv("PORT", 8051)), host="0.0.0.0")
+    app.run_server(debug=True, port=int(os.getenv("PORT", 8051)), host="0.0.0.0")
