@@ -1,5 +1,3 @@
 dash==2.18.2
 pandas==2.2.3
 plotly==5.24.1
-gunicorn==21.2.0
-scipy==1.15.2  # Stable for Python 3.10
