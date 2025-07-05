@@ -318,5 +318,6 @@ def update_distribution(file, mutation_str):
 
     return fig
 # ========= Run ===========
-if __name__ == "__main__":
-    app.run(debug=True, port=int(os.getenv("PORT", 8051)), host="0.0.0.0")
+#if __name__ == "__main__":
+#    app.run(debug=True, port=int(os.getenv("PORT", 8051)), host="0.0.0.0")
+server = app.server
