@@ -1,5 +1,5 @@
 dash==2.18.2
 pandas==2.2.3
 plotly==5.24.1
-scipy==1.13.0; python_version < '3.11'
 gunicorn==21.2.0
+scipy==1.13.0  # Pre-built wheel for Python 3.13
