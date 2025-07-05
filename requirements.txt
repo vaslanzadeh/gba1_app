@@ -1,5 +1,6 @@
 dash==2.18.2
 pandas==2.2.3
 plotly==5.24.1
+scipy==1.13.0
 gunicorn
 
