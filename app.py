@@ -318,7 +318,6 @@ def update_distribution(file, mutation_str):
     return fig
 
 # This is the important line for Gunicorn
-server = app.server
 
 if __name__ == "__main__":
     app.run_server(debug=True, port=int(os.getenv("PORT", 8051)), host="0.0.0.0")
