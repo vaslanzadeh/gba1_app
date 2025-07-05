@@ -1,3 +1,5 @@
+#!/usr/bin/env python3.10
+
 # Copyright (c) 2025 Vahid Aslanzadeh
 # All rights reserved.
 #
