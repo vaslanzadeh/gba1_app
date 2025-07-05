@@ -319,15 +319,11 @@ def update_distribution(file, mutation_str):
     return fig
 
 # Run the app
-app.server = app.server  # Ensures the server is properly exposed
+server = app.server
 
-def get_wsgi_application():
-    """Explicit WSGI application factory"""
-    return app.server
+# Explicit WSGI application entry point
+application = server  # Gunicorn will look for this exact name
 
-# Explicit WSGI application object
-application = get_wsgi_application()
-
-# For local development only
+# ========== Local Development ==========
 if __name__ == "__main__":
-    app.run(debug=True, port=int(os.getenv("PORT", 8051)), host="0.0.0.0")
+    app.run_server(debug=True, port=int(os.getenv("PORT", 8051)))
