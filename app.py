@@ -14,7 +14,6 @@ import pandas as pd
 import plotly.graph_objects as go
 from dash import Input, Output, State, dcc, html
 from plotly.colors import get_colorscale
-from scipy.stats import gaussian_kde
 
 
 # ========= Load CSVs ===========
