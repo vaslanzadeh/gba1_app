@@ -1,5 +1,3 @@
-#!/usr/bin/env python3.10
-
 # Copyright (c) 2025 Vahid Aslanzadeh
 # All rights reserved.
 #
@@ -16,6 +14,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from dash import Input, Output, State, dcc, html
 from plotly.colors import get_colorscale
+from scipy.stats import gaussian_kde
 
 
 # ========= Load CSVs ===========
@@ -42,6 +41,7 @@ def generate_centered_colorscale(zmin, zmax, base_colorscale='RdBu_r'):
 
 # ========= App Setup ===========
 app = dash.Dash(__name__)
+app.title = "Heatmap Viewer"
 
 # ========= Layout ===========
 app.layout = html.Div([
@@ -56,7 +56,7 @@ app.layout = html.Div([
 
     html.Div([
         html.Label("Min (zmin):"),
-        dcc.Input(id='zmin-input', type='number', value=-1, step=0.1),
+        dcc.Input(id='zmin-input', type='number', value=-0.8, step=0.1),
 
         html.Label("Max (zmax):", style={'marginLeft': '20px'}),
         dcc.Input(id='zmax-input', type='number', value=0.5, step=0.1),
@@ -304,7 +304,10 @@ def update_distribution(file, mutation_str):
             showgrid=True,
             gridwidth=1,
             gridcolor='LightGrey'
-        )
+        ),
+        plot_bgcolor='white',  # Set plot background to white
+        paper_bgcolor='white', # Set surrounding area background to white
+        
     )
     
     # Add vertical line at 0 in black
@@ -315,7 +318,6 @@ def update_distribution(file, mutation_str):
     )
 
     return fig
-
-
+# ========= Run ===========
 if __name__ == "__main__":
-    app.run_server(debug=True, port=int(os.getenv("PORT", 8051)), host="0.0.0.0")
+    app.run(debug=True, port=int(os.getenv("PORT", 8051)), host="0.0.0.0")
