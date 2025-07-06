@@ -14,6 +14,7 @@ import pandas as pd
 import plotly.graph_objects as go
 from dash import Input, Output, State, dcc, html
 from plotly.colors import get_colorscale
+from scipy.stats import gaussian_kde
 
 
 # ========= Load CSVs ===========
@@ -40,7 +41,7 @@ def generate_centered_colorscale(zmin, zmax, base_colorscale='RdBu_r'):
 
 # ========= App Setup ===========
 app = dash.Dash(__name__)
-app.title = "Heatmap Viewer"
+app.title = "VEMViewer"
 
 # ========= Layout ===========
 app.layout = html.Div([
@@ -53,25 +54,31 @@ app.layout = html.Div([
         multi=False
     ),
 
-    html.Div([
-        html.Label("Min (zmin):"),
-        dcc.Input(id='zmin-input', type='number', value=-0.8, step=0.1),
-
-        html.Label("Max (zmax):", style={'marginLeft': '20px'}),
-        dcc.Input(id='zmax-input', type='number', value=0.5, step=0.1),
-    ], style={'marginTop': '10px', 'marginBottom': '20px'}),
-
     html.Br(),
-
-    html.Label("Search mutations  (e.g., C165Y, D166P):"),
+    
+    # Search mutations section (kept before distribution plot)
+    html.Label("Search mutations (e.g., C165Y, D166P):"),
     dcc.Input(id='mutation-input', type='text', debounce=True, style={'width': '150px'}),
     html.Div(id='mutation-output', style={'marginTop': '10px', 'fontWeight': 'bold'}),
 
     html.Br(),
     dcc.Graph(id="score-distribution"),
+    
+    # Min/Max controls moved after distribution plot
+    html.Div([
+        html.Div("Heatmap Colorbar Range", style={'marginBottom': '10px', 'fontWeight': 'normal'}),
+        html.Div([
+            html.Label("Min Score:", style={'marginRight': '10px'}),
+            dcc.Input(id='zmin-input', type='number', value=-0.8, step=0.1, style={'marginRight': '20px'}),
+
+            html.Label("Max Score:", style={'marginRight': '10px'}),
+            dcc.Input(id='zmax-input', type='number', value=0.5, step=0.1),
+        ], style={'marginTop': '10px', 'marginBottom': '20px'}),
+    ]),
+
     dcc.Graph(id="heatmap"),
 
-    # 👇 Footer added here
+    # Footer
     html.Div(
         "© Vahid Aslanzadeh – All rights reserved",
         style={
@@ -83,7 +90,6 @@ app.layout = html.Div([
         }
     )
 ])
-
 # ========= Heatmap Callback ===========
 @app.callback(
     Output("heatmap", "figure"),
