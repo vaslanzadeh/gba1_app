@@ -209,7 +209,7 @@ def lookup_mutation(mutation_str, file):
 
             score = row[variant]
             median = row["median_score"]
-            results.append(f"{m} → Variant Score: {score:.2f}, Median Score: {median:.2f}")
+            results.append(f"{m} → Variant Score: {score:.2f}, Position {m[:-1]} Median Score: {median:.2f}")
 
         return html.Ul([html.Li(r) for r in results])
 
